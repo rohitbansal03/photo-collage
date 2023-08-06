@@ -41,7 +41,7 @@ function ImageBox({ imageName, index }) {
   return (
     <div>
       <div className="image" id={imageName}>
-        <img onLoad={handleOnImgLoad} src={imageName} alt={`alt-${index}`} />
+        <img onLoad={handleOnImgLoad} src={imageName} title={imageName} alt={`alt-${index}`} />
       </div>
       <div className="content">
         <ReactQuill
