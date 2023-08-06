@@ -1,6 +1,8 @@
 # photo-collage
 
-This is a react app to display photos from a directory "<root>/images/" into multi-column layout. The app also supports provide in-line editing of content below each of the photos.
+This is a react app to display photos from a directory "<root>/images/" into multi-column layout. The app also supports in-line editing of content below each of the photos.
+
+![screenshot](./screenshot-photo-collage.png)
 
 The in-line edited content for images is persisted in local-storage of the browser. So the content doesn't get lost on reload.
 
