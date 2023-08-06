@@ -4,7 +4,7 @@ import ImageBox from "./ImageBox";
 import configData from "../config/config.json";
 
 function ImageGallery() {
-  const imagesPath = require.context("../images/gift_options", true);
+  const imagesPath = require.context("../images", true);
   const imageList = imagesPath.keys().map((image) => imagesPath(image));
   imageList.sort(compareUsingImageDims);
 
