@@ -1,18 +1,18 @@
-import "../styles/ImageGallery.css";
 import React from "react";
-import ImageBox from "./ImageBox";
+import { useSearchParams } from "react-router-dom";
 import configData from "../config/config.json";
+import "../styles/ImageGallery.css";
+import ImageBox from "./ImageBox";
 
 function ImageGallery() {
+  const [searchParams] = useSearchParams();
+  const numOfColsLayout = getNumOfCols(searchParams);
   const imagesPath = require.context("../images", true);
   const imageList = imagesPath.keys().map((image) => imagesPath(image));
   imageList.sort(compareUsingImageDims);
 
   const items = convertImagesToItems(imageList);
-  const imageRows = groupImageIntoRows(
-    imageList,
-    configData.layout.numOfColumns
-  );
+  const imageRows = groupImageIntoRows(imageList, numOfColsLayout);
 
   function renderImagesInRow(imageRow) {
     return (
@@ -30,10 +30,21 @@ function ImageGallery() {
       const item = items.find((item) => item.name === image);
       return (
         <div key={item.name} className="img-col">
-          <ImageBox imageName={item.name} index={index} />
+          <ImageBox
+            imageName={item.name}
+            index={index}
+            numOfColLayout={numOfColsLayout}
+          />
         </div>
       );
     }
+  }
+
+  function getNumOfCols(searchParams) {
+    const cols_count_query_param = searchParams.get("cols");
+    return cols_count_query_param == null
+      ? configData.layout.numOfColumns
+      : parseInt(cols_count_query_param);
   }
 
   return (
@@ -64,7 +75,7 @@ function convertImagesToItems(imageList) {
   imageList.map((image) =>
     imageItems.push({
       name: image,
-    })
+    }),
   );
   return imageItems;
 }

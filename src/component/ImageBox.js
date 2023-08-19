@@ -1,9 +1,8 @@
+import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
-import React, { useState, useEffect } from "react";
-import configData from "../config/config.json";
 import "react-quill/dist/quill.snow.css";
 
-function ImageBox({ imageName, index }) {
+function ImageBox({ imageName, index, numOfColLayout }) {
   const [item, setItem] = useState(() => {
     const item = localStorage.getItem(`collage-${imageName}`);
     if (item) {
@@ -39,16 +38,19 @@ function ImageBox({ imageName, index }) {
     localStorage.setItem(`collage-${imageName}`, JSON.stringify(item));
   }, [item, imageName]);
 
-
-  const numOfCols = configData.layout.numOfColumns
-  // If singl-image layout is required, should show image and description
+  // If single-image layout is required, should show image and description
   // side-by-side as columns.
-  if (numOfCols == 1) {
+  if (numOfColLayout === 1) {
     return (
       <div className="img-col">
         <div className="img-col">
           <div className="image" id={imageName}>
-            <img onLoad={handleOnImgLoad} src={imageName} title={imageName} alt={`alt-${index}`} />
+            <img
+              onLoad={handleOnImgLoad}
+              src={imageName}
+              title={imageName}
+              alt={`alt-${index}`}
+            />
           </div>
         </div>
         <div className="img-col">
@@ -67,7 +69,12 @@ function ImageBox({ imageName, index }) {
     return (
       <div>
         <div className="image" id={imageName}>
-          <img onLoad={handleOnImgLoad} src={imageName} title={imageName} alt={`alt-${index}`} />
+          <img
+            onLoad={handleOnImgLoad}
+            src={imageName}
+            title={imageName}
+            alt={`alt-${index}`}
+          />
         </div>
         <div className="content">
           <ReactQuill
